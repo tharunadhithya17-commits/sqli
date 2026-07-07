@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vulnerable Shop Search (SQLi Demo)</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="nav-bar">
+    <a href="/">Home</a>
+    {% if session.get('username') %}
+      <a href="/logout">Logout ({{ session['username'] }})</a>
+    {% else %}
+      <a href="/login">Login</a>
+    {% endif %}
+  </div>
+
+  {% if session.get('solved') %}
+  <div class="solved-banner">
+    Lab: Solved! Congratulations.
+  </div>
+  {% endif %}
+
+  <div class="container">
+    <h1>🛒 Demo Shop <span class="badge">Vulnerable Lab</span></h1>
+    <p class="subtitle">Search products by name. (This app is deliberately vulnerable to SQL injection for learning purposes.)</p>
+
+    <form action="/search" method="get" class="search-box">
+      <input type="text" name="q" placeholder="e.g. Mouse" autocomplete="off">
+      <button type="submit">Search</button>
+    </form>
+    
+    <p class="subtitle">
+      <strong>Goal:</strong> The database contains a table that holds usernames and passwords. You need to determine the name of this table and the columns it contains, then retrieve the contents of the table to obtain the username and password of all users. To solve the lab, log in as the <code>admin</code> user.
+    </p>
+
+  </div>
+</body>
+</html>

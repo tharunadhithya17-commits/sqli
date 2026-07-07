@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Search Results</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="nav-bar">
+    <a href="/">Home</a>
+    {% if session.get('username') %}
+      <a href="/logout">Logout ({{ session['username'] }})</a>
+    {% else %}
+      <a href="/login">Login</a>
+    {% endif %}
+  </div>
+
+  {% if session.get('solved') %}
+  <div class="solved-banner">
+    Lab: Solved! Congratulations.
+  </div>
+  {% endif %}
+
+  <div class="container">
+    <h1>🛒 Search Results</h1>
+    <a class="back" href="/">&larr; Back to search</a>
+
+    <div class="query-box">
+      <strong>Search term:</strong> <code>{{ q }}</code><br>
+      <strong>Actual SQL executed:</strong>
+      <pre>{{ query }}</pre>
+    </div>
+
+    {% if error %}
+      <p class="error">SQL Error: {{ error }}</p>
+    {% else %}
+      <table>
+        <thead>
+          <tr><th>Column 1</th><th>Column 2</th><th>Column 3</th></tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            {% for col in row %}
+              <td>{{ col }}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if not rows %}
+        <p>No results found.</p>
+      {% endif %}
+    {% endif %}
+  </div>
+</body>
+</html>
